@@ -2,17 +2,15 @@
 
 namespace App\DataTables;
 
-use App\Models\Author;
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AuthorDataTable extends DataTable
+class BookDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,24 +20,24 @@ class AuthorDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('status', fn ($author) => view('vendor.datatables.status-badge', ['status' => $author->status]))
-            ->editColumn('actions', function($author) {
+            ->editColumn('status', fn($book) => view('vendor.datatables.status-badge', ['status' => $book->status]))
+            ->editColumn('actions', function ($book) {
                 return view('vendor.datatables.action-buttons', [
-                    'show' => route('authors.show', ['author' => $author->id]),
-                    'edit' => route('authors.edit', ['author' => $author->id]),
-                    'destroy' => route('authors.destroy', ['author' => $author->id]),
-                    'recordName' => 'Author',
+                    'show' => route('books.show', ['book' => $book->id]),
+                    'edit' => route('books.edit', ['book' => $book->id]),
+                    'destroy' => route('books.destroy', ['book' => $book->id]),
+                    'recordName' => 'Book',
                 ]);
             })
             ->rawColumns(['status', 'action-buttons'])
-            ->setRowId('id')
+            ->setRowId('10')
             ->addIndexColumn();
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Author $model): QueryBuilder
+    public function query(Book $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -50,14 +48,22 @@ class AuthorDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('author-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                    ]);
+            ->setTableId('book-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+
+
+            ]);
     }
 
     /**
@@ -67,7 +73,7 @@ class AuthorDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')
-                ->title('Order')
+                ->title('order')
                 ->addClass('text-center')
                 ->searchable(false)
                 ->orderable(false)
@@ -75,9 +81,8 @@ class AuthorDataTable extends DataTable
                 ->printable(false),
 
             Column::make('name'),
-            Column::make('surname'),
-            Column::make('status')
-                ->addClass('text-center align-middle'),
+            Column::make('version'),
+            Column::make('status'),
 
 
             Column::make('actions')
@@ -94,6 +99,6 @@ class AuthorDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Author_' . date('YmdHis');
+        return 'Book_' . date('YmdHis');
     }
 }

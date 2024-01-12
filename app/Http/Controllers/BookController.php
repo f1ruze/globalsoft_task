@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\AuthorDataTable;
+use App\DataTables\BookDataTable;
 use App\Http\Requests\Author\StoreAuthorRequest;
 use App\Http\Requests\Author\UpdateAuthorRequest;
-use App\Models\Author;
+use App\Models\Book;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Services\DataTable;
 
-class AuthorController extends Controller
+class BookController extends Controller
 {
-    public function index(AuthorDataTable $authorDataTable)
+
+    public function index(BookDataTable $authorDataTable)
     {
-        return $authorDataTable->render('authors.index');
+        return $authorDataTable->render('books.index');
     }
 
-    public function show(Author $author)
+    public function show(Book $book)
     {
-        return view('authors.show', compact('author'));
+        return view('books.show', compact());
     }
 
     public function create()
     {
-        return view('authors.create');
+        return view('books.create');
     }
 
     public function store(StoreAuthorRequest $request)

@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/dashboard', function () {
+    return view('dashboard');
 });
 
 Route::get('/home', function () {
@@ -22,6 +22,8 @@ Route::get('/home', function () {
 });
 
 Route::resource('authors', \App\Http\Controllers\AuthorController::class);
+
+Route::resource("books", \App\Http\Controllers\BookController::class);
 
 Auth::routes();
 

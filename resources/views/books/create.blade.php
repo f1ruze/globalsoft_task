@@ -1,6 +1,6 @@
 @extends('layouts.page')
 
-@section('page_header', 'Create Author')
+@section('page_header', 'Create Book')
 
 @section('content')
     <div class="row justify-content-center">
@@ -31,7 +31,7 @@
                     <label for="exampleFormControlInput1">Surname</label>
                     <input
                         class="form-control form-control-solid" type="text"
-                        placeholder="Surname" name="surname" value="{{ old("surname") }}">
+                        placeholder="Version" name="version" value="{{ old("Version") }}">
                 </div>
 
                 <div class="card-footer d-flex mt-5">
