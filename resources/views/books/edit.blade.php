@@ -5,7 +5,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
-            <form action="{{ route("books.update", ['author' => $book->id]) }}" enctype="multipart/form-data"
+            <form action="{{ route("books.update", ['book' => $book->id]) }}" enctype="multipart/form-data"
                   class="mt-5 bg-white border border-secondary p-4 rounded" method="POST">
 
                 @csrf
@@ -33,6 +33,15 @@
                     <input
                         class="form-control form-control-solid" type="text"
                         placeholder="Version" name="version" value="{{ old("version", $book->version) }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleFormControlSelect1">Author</label>
+                    <select name="author_id" class="form-control" id="exampleFormControlSelect1">
+                        @foreach($authors as $author)
+                            <option value="{{$author->id}}">{{ $author->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="card-footer d-flex">

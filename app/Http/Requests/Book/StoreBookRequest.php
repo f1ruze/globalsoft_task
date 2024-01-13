@@ -11,7 +11,8 @@ class StoreBookRequest extends FormRequest
         return [
             'name'    => ['required', 'string', 'max:255'],
             'version' => ['required', 'string', 'max:255'],
-            'status'  => ['required', 'boolean']
+            'status'  => ['required', 'boolean'],
+            'author_id'=>['required','exists:authors,id']
         ];
     }
 }

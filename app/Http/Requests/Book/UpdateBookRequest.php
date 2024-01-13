@@ -11,7 +11,8 @@ class UpdateBookRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'version' => ['string', 'max:255'],
-            'status' => ['boolean']
+            'status' => ['boolean'],
+            'author_id'=>['exists:authors,id']
         ];
     }
 }

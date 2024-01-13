@@ -6,7 +6,7 @@ use App\Traits\HasDates;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
-class Book  extends Model
+class Book extends Model
 {
     use HasDates;
 
@@ -21,4 +21,13 @@ class Book  extends Model
     ];
 
 
+    protected function nameversion(): Attribute
+    {
+
+        return Attribute::make(
+            get: fn() => "$this->name $this->version"
+        );
+
+
+    }
 }

@@ -44,8 +44,8 @@
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="buttons.html">Create</a>
-                <a class="collapse-item" href="cards.html">List</a>
+                <a class="collapse-item" href="{{ route("books.create") }}">Create</a>
+                <a class="collapse-item" href="{{route("books.index")}}">List</a>
             </div>
         </div>
     </li>

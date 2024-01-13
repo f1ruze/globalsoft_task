@@ -3,53 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\BookDataTable;
-use App\Http\Requests\Author\StoreAuthorRequest;
-use App\Http\Requests\Author\UpdateAuthorRequest;
+
+use App\Http\Requests\Book\StoreBookRequest;
+use App\Http\Requests\Book\UpdateBookRequest;
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
 
-    public function index(BookDataTable $authorDataTable)
+    public function index(BookDataTable $bookDataTable)
     {
-        return $authorDataTable->render('books.index');
+        return $bookDataTable->render('books.index');
     }
 
     public function show(Book $book)
     {
-        return view('books.show', compact());
+        return view('books.show', compact('book'));
     }
 
     public function create()
     {
-        return view('books.create');
+        $authors = Author::get();
+        return view('books.create' , compact('authors'));
     }
 
-    public function store(StoreAuthorRequest $request)
+    public function store(StoreBookRequest $request)
     {
-        $author = Author::create($request->validated());
+        $book = Book::create($request->validated());
 
-        return redirect(route('authors.show', ['author' => $author->id]));
+        return redirect(route('books.show', ['book' => $book->id]));
     }
 
-    public function edit(Author $author)
+    public function edit(Book $book)
     {
-        return view('authors.edit', compact('author'));
+        $authors = Author::get();
+        return view('books.edit', compact('book','authors'));
     }
 
-    public function update(UpdateAuthorRequest $request, Author $author)
+    public function update(UpdateBookRequest $request, Book $book)
     {
         $datas = $request->validated();
-        $author->update($datas);
+        $book->update($datas);
 
-        return redirect(route('authors.show', ['author' => $author->id]));
+        return redirect(route('books.show', ['book' => $book->id]));
     }
 
-    public function destroy(Author $author)
+    public function destroy(Book $book)
     {
-        $author->delete();
+        $book->delete();
 
-        return redirect(route('authors.index'));
+        return redirect(route('books.index'));
     }
 }
